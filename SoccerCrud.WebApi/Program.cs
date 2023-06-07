@@ -1,5 +1,8 @@
 
 global using FastEndpoints;
+using Microsoft.EntityFrameworkCore;
+using SoccerCrud.WebApi;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddFastEndpoints();
+builder.Services.AddDbContext<SoccerCrudDataContext>(options =>
+{
+    options.UseSqlite("SoccerCrud.db");
+});
 
 
 var app = builder.Build();
