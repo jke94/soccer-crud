@@ -1,8 +1,6 @@
 
-global using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using SoccerCrud.WebApi;
-using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddFastEndpoints();
 builder.Services.AddDbContext<SoccerCrudDataContext>(options =>
 {
     options.UseSqlite("SoccerCrud.db");
@@ -18,7 +15,6 @@ builder.Services.AddDbContext<SoccerCrudDataContext>(options =>
 
 
 var app = builder.Build();
-app.UseFastEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
