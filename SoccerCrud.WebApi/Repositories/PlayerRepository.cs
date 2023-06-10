@@ -1,12 +1,13 @@
 ﻿namespace SoccerCrud.WebApi.Repositories
 {
+    using Microsoft.EntityFrameworkCore;
     using SoccerCrud.WebApi.Database;
     using SoccerCrud.WebApi.Dto;
     using SoccerCrud.WebApi.Entities;
 
     public interface IPlayerRepository
     {
-        Task<CreatedPlayerDto?> CreateAsync(CreatePlayerDto createTeamDto);
+        Task<CreatedPlayerDto?> CreateAsync(CreatePlayerDto createPlayerDto);
         Task<PlayerDto?> GetAsyncById(Guid id);
         Task<IList<PlayerDto>> GetAllAsync();
         Task<PlayerDto?> UpdateAsync(Guid id, UpdatePlayerDto updatePlayerDto);
@@ -22,9 +23,22 @@
             _soccerCrudDataContext = soccerCrudDataContext;
         }
 
-        public Task<CreatedPlayerDto?> CreateAsync(CreatePlayerDto createTeamDto)
+        public async Task<CreatedPlayerDto?> CreateAsync(CreatePlayerDto createPlayerDto)
         {
-            throw new NotImplementedException();
+            var entityEntry = await _soccerCrudDataContext.AddAsync(new Player()
+            {
+                Name = createPlayerDto.Name
+            });
+
+            await _soccerCrudDataContext.SaveChangesAsync();
+
+            var createdPlayerDto = new CreatedPlayerDto()
+            {
+                Id = entityEntry.Entity.Id,
+                Name = entityEntry.Entity.Name
+            };
+
+            return createdPlayerDto;
         }
 
         public Task<bool> DeleteAsync(Guid id)
@@ -32,9 +46,27 @@
             throw new NotImplementedException();
         }
 
-        public Task<IList<PlayerDto>> GetAllAsync()
+        public async Task<IList<PlayerDto>?> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var taskResult = await _soccerCrudDataContext.Players.ToListAsync();
+
+            if (taskResult == null)
+            {
+                return null;
+            }
+
+            var teams = new List<PlayerDto>();
+
+            foreach (var item in taskResult)
+            {
+                teams.Add(new PlayerDto()
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                });
+            }
+
+            return teams;
         }
 
         public Task<PlayerDto?> GetAsyncById(Guid id)
