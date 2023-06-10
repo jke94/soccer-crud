@@ -22,6 +22,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 // Custom Services.
 builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddScoped<IPlayerService, PlayerService>();
 
 // Repositories.
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
