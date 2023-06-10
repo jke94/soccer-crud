@@ -6,7 +6,7 @@
     public class SoccerCrudDataContext : DbContext
     {
         public virtual DbSet<Player> Players { get;set; }
-        public virtual DbSet<Player> Team { get; set; }
+        public virtual DbSet<Team> Team { get; set; }
 
         public SoccerCrudDataContext(
             DbContextOptions<SoccerCrudDataContext> context

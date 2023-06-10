@@ -1,12 +1,44 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SoccerCrud.WebApi.Dto;
+using SoccerCrud.WebApi.Services;
 
 namespace SoccerCrud.WebApi.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class TeamController : Controller
     {
-        public IActionResult Index()
+        private ITeamService _teamService;
+
+        public TeamController(ITeamService teamService)
         {
-            return View();
+            _teamService = teamService;
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var team = await _teamService.GetAsync(id);
+
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(team);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateTeamDto createTeamDto)
+        {
+            var createdTeamDto = await _teamService.CreateAsync(createTeamDto);
+
+            if (createdTeamDto == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(createdTeamDto);
         }
     }
 }
