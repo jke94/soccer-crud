@@ -28,24 +28,40 @@
             return taskResult;
         }
 
-        public Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var taskResult = await _unitOfWork.PlayerRepository.DeleteAsync(id);
+
+            return taskResult;
         }
 
-        public Task<IList<PlayerDto>> GetAllAsync()
+        public async Task<IList<PlayerDto>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _unitOfWork.PlayerRepository.GetAllAsync();
         }
 
-        public Task<PlayerDto?> GetAsync(Guid id)
+        public async Task<PlayerDto?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var taskResult = await _unitOfWork.PlayerRepository.GetAsyncById(id);
+
+            if (taskResult == null)
+            {
+                return null;
+            }
+
+            return taskResult;
         }
 
-        public Task<PlayerDto?> UpdateAsync(Guid id, UpdatePlayerDto updatePlayerDto)
+        public async Task<PlayerDto?> UpdateAsync(Guid id, UpdatePlayerDto updatePlayerDto)
         {
-            throw new NotImplementedException();
+            var taskResult = await _unitOfWork.PlayerRepository.UpdateAsync(id, updatePlayerDto);
+
+            if (taskResult == null)
+            {
+                return null;
+            }
+
+            return taskResult;
         }
     }
 }

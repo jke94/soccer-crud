@@ -35,9 +35,9 @@
             return taskResult;
         }
 
-        public Task<IList<TeamDto>> GetAllAsync()
+        public async Task<IList<TeamDto>> GetAllAsync()
         {
-            return _unitOfWork.TeamRepository.GetAllAsync();
+            return await _unitOfWork.TeamRepository.GetAllAsync();
         }
 
         public async Task<TeamDto?> GetAsync(Guid id)
