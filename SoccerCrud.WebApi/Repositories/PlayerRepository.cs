@@ -6,11 +6,11 @@
 
     public interface IPlayerRepository
     {
-        Task<CreatePlayerDto> CreateAsync(Player user);
-        Task<PlayerDto?> GetAsyncById(int id);
+        Task<CreatedPlayerDto?> CreateAsync(CreatePlayerDto createTeamDto);
+        Task<PlayerDto?> GetAsyncById(Guid id);
         Task<IList<PlayerDto>> GetAllAsync();
-        Task UpdateAsync(UpdatePlayerDto user);
-        Task<bool> DeleteAsync(int id);
+        Task<PlayerDto?> UpdateAsync(Guid id, UpdatePlayerDto updatePlayerDto);
+        Task<bool> DeleteAsync(Guid id);
     }
 
     public class PlayerRepository : IPlayerRepository
@@ -22,17 +22,12 @@
             _soccerCrudDataContext = soccerCrudDataContext;
         }
 
-        public async Task<CreatePlayerDto> CreateAsync(Player user)
+        public Task<CreatedPlayerDto?> CreateAsync(CreatePlayerDto createTeamDto)
         {
             throw new NotImplementedException();
         }
 
-        private void AddAsync(Player user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> DeleteAsync(int id)
+        public Task<bool> DeleteAsync(Guid id)
         {
             throw new NotImplementedException();
         }
@@ -42,12 +37,12 @@
             throw new NotImplementedException();
         }
 
-        public Task<PlayerDto?> GetAsyncById(int id)
+        public Task<PlayerDto?> GetAsyncById(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(UpdatePlayerDto user)
+        public Task<PlayerDto?> UpdateAsync(Guid id, UpdatePlayerDto updatePlayerDto)
         {
             throw new NotImplementedException();
         }

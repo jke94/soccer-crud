@@ -6,13 +6,9 @@
     public interface ITeamService
     {
         Task<CreatedTeamDto?> CreateAsync(CreateTeamDto createTeamDto);
-
         Task<TeamDto?> GetAsync(Guid id);
-
         Task<IList<TeamDto>> GetAllAsync();
-
         Task<TeamDto?> UpdateAsync(Guid id, UpdateTeamDto updateTeamDto);
-
         Task<bool> DeleteAsync(Guid id);
     }
 
