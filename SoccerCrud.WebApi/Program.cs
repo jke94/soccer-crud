@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SoccerCrud.WebApi.Database;
+using SoccerCrud.WebApi.Database.Seeds;
 using SoccerCrud.WebApi.Repositories;
 using SoccerCrud.WebApi.Services;
 using System.Text.Json.Serialization;
@@ -27,12 +28,20 @@ builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+// Seed data.
+builder.Services.AddScoped<IDataSeed, DataSeed>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<SoccerCrudDataContext>();
+    var dataSeed = scope.ServiceProvider.GetRequiredService<IDataSeed>();
+
+    context.Database.EnsureDeletedAsync().Wait();
     context.Database.Migrate();
+    
+    await dataSeed.SeedData(context);
 }
 
 
