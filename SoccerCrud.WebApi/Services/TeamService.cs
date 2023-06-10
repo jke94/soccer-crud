@@ -8,13 +8,13 @@
     {
         Task<CreatedTeamDto?> CreateAsync(CreateTeamDto createTeamDto);
 
-        Task<Team?> GetAsync(int id);
+        Task<TeamDto?> GetAsync(Guid id);
 
         Task<IEnumerable<Team>> GetAllAsync();
 
         Task<bool> UpdateAsync(UpdateTeamDto updateTeamDto);
 
-        Task<bool> DeleteAsync(int id);
+        Task<bool> DeleteAsync(Guid id);
     }
 
     public class TeamService : ITeamService
@@ -33,7 +33,7 @@
             return taskResult;
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public Task<bool> DeleteAsync(Guid id)
         {
             throw new NotImplementedException();
         }
@@ -43,9 +43,16 @@
             throw new NotImplementedException();
         }
 
-        public Task<Team?> GetAsync(int id)
+        public async Task<TeamDto?> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var taskResult = await _unitOfWork.TeamRepository.GetAsyncById(id);
+
+            if (taskResult == null)
+            {
+                return null;
+            }
+
+            return taskResult;
         }
 
         public Task<bool> UpdateAsync(UpdateTeamDto updateTeamDto)

@@ -2,10 +2,10 @@
 {
     public class Player
     {
-        public int Id { get; set; }
+        public Guid Id { get; init; } = Guid.NewGuid();
 
         public string Name { get; set; }
 
-        public int TeamId { get; set; }
+        public Guid TeamId { get; set; }
     }
 }

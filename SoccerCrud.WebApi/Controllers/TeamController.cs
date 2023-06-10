@@ -15,8 +15,8 @@ namespace SoccerCrud.WebApi.Controllers
             _teamService = teamService;
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> Get(Guid id)
         {
             var team = await _teamService.GetAsync(id);
 

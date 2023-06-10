@@ -1,15 +1,17 @@
 ﻿namespace SoccerCrud.WebApi.Repositories
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using SoccerCrud.WebApi.Dto;
     using SoccerCrud.WebApi.Entities;
 
     public interface ITeamRepository
     {
         Task<CreatedTeamDto?> CreateAsync(CreateTeamDto createTeamDto);
-        Task<TeamDto?> GetAsyncById(int id);
+        Task<TeamDto?> GetAsyncById(Guid id);
         Task<IList<TeamDto>> GetAllAsync();
         Task UpdateAsync(UpdateTeamDto user);
-        Task<bool> DeleteAsync(int id);
+        Task<bool> DeleteAsync(Guid id);
     }
 
     public class TeamRepository : ITeamRepository
@@ -39,7 +41,7 @@
             return createdTeamDto;
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public Task<bool> DeleteAsync(Guid id)
         {
             throw new NotImplementedException();
         }
@@ -49,9 +51,22 @@
             throw new NotImplementedException();
         }
 
-        public Task<TeamDto?> GetAsyncById(int id)
+        public async Task<TeamDto?> GetAsyncById(Guid id)
         {
-            throw new NotImplementedException();
+            var taskResult = await _soccerCrudDataContext.Team.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(taskResult == null)
+            {
+                return null;
+            }
+
+            var teamDto = new TeamDto()
+            {
+                Id = taskResult.Id,
+                Name = taskResult.Name
+            };
+
+            return teamDto;
         }
 
         public Task UpdateAsync(UpdateTeamDto user)
