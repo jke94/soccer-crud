@@ -4,13 +4,14 @@
 
     [ApiController]
     [Route("api/[controller]")]
-
     public class PlayerController : Controller
     {
-        [HttpGet]
-        public IActionResult Index()
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> Get(Guid id)
         {
-            return View();
+            var result = await Task.FromResult(id);
+
+            return Ok($"TODO! {result}");
         }
     }
 }

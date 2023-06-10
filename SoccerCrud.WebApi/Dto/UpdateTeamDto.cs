@@ -2,5 +2,6 @@
 {
     public class UpdateTeamDto
     {
+        public string Name { get; set; }
     }
 }

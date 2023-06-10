@@ -1,7 +1,6 @@
 ﻿namespace SoccerCrud.WebApi.Services
 {
     using SoccerCrud.WebApi.Dto;
-    using SoccerCrud.WebApi.Entities;
     using SoccerCrud.WebApi.Repositories;
 
     public interface ITeamService
@@ -10,9 +9,9 @@
 
         Task<TeamDto?> GetAsync(Guid id);
 
-        Task<IEnumerable<Team>> GetAllAsync();
+        Task<IList<TeamDto>> GetAllAsync();
 
-        Task<bool> UpdateAsync(UpdateTeamDto updateTeamDto);
+        Task<TeamDto?> UpdateAsync(Guid id, UpdateTeamDto updateTeamDto);
 
         Task<bool> DeleteAsync(Guid id);
     }
@@ -33,14 +32,16 @@
             return taskResult;
         }
 
-        public Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var taskResult = await _unitOfWork.TeamRepository.DeleteAsync(id);
+
+            return taskResult;
         }
 
-        public Task<IEnumerable<Team>> GetAllAsync()
+        public Task<IList<TeamDto>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _unitOfWork.TeamRepository.GetAllAsync();
         }
 
         public async Task<TeamDto?> GetAsync(Guid id)
@@ -55,9 +56,16 @@
             return taskResult;
         }
 
-        public Task<bool> UpdateAsync(UpdateTeamDto updateTeamDto)
+        public async Task<TeamDto?> UpdateAsync(Guid id, UpdateTeamDto updateTeamDto)
         {
-            throw new NotImplementedException();
+            var taskResult = await _unitOfWork.TeamRepository.UpdateAsync(id, updateTeamDto);
+
+            if (taskResult == null)
+            {
+                return null;
+            }
+
+            return taskResult;
         }
     }
 }

@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /SoccerCrud.WebApi/SoccerCrud.db-shm
 /SoccerCrud.WebApi/SoccerCrud.db-wal
+/SoccerCrud.WebApi/SoccerCrud.db

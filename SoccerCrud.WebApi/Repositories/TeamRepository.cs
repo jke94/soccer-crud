@@ -1,7 +1,6 @@
 ﻿namespace SoccerCrud.WebApi.Repositories
 {
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using SoccerCrud.WebApi.Dto;
     using SoccerCrud.WebApi.Entities;
 
@@ -10,7 +9,7 @@
         Task<CreatedTeamDto?> CreateAsync(CreateTeamDto createTeamDto);
         Task<TeamDto?> GetAsyncById(Guid id);
         Task<IList<TeamDto>> GetAllAsync();
-        Task UpdateAsync(UpdateTeamDto user);
+        Task<TeamDto?> UpdateAsync(Guid id, UpdateTeamDto updateTeamDto);
         Task<bool> DeleteAsync(Guid id);
     }
 
@@ -41,14 +40,53 @@
             return createdTeamDto;
         }
 
-        public Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var taskResult = await _soccerCrudDataContext.Team.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (taskResult == null)
+            {
+                return false;
+            }
+
+            var entity = _soccerCrudDataContext.Remove(taskResult);
+
+            if (taskResult == null)
+            {
+                return false;
+            }
+
+            var result = await _soccerCrudDataContext.SaveChangesAsync();
+
+            if (result > 0 )
+            {
+                return true;
+            }
+
+            return false;
         }
 
-        public Task<IList<TeamDto>> GetAllAsync()
+        public async Task<IList<TeamDto>?> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var taskResult = await _soccerCrudDataContext.Team.ToListAsync();
+
+            if (taskResult == null)
+            {
+                return null;
+            }
+
+            var teams = new List<TeamDto>();
+
+            foreach (var item in taskResult)
+            {
+                teams.Add(new TeamDto()
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                });
+            }
+
+            return teams;
         }
 
         public async Task<TeamDto?> GetAsyncById(Guid id)
@@ -69,9 +107,33 @@
             return teamDto;
         }
 
-        public Task UpdateAsync(UpdateTeamDto user)
+        public async Task<TeamDto?> UpdateAsync(Guid id, UpdateTeamDto updateTeamDto)
         {
-            throw new NotImplementedException();
+            var team = await _soccerCrudDataContext.Team.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(team == null)
+            {
+                return null;
+            }
+
+            team.Name = updateTeamDto.Name;
+
+            var entity = _soccerCrudDataContext.Update(team);
+
+            if (entity == null)
+            {
+                return null;
+            }
+
+            await _soccerCrudDataContext.SaveChangesAsync();
+
+            var teamDto = new TeamDto()
+            {
+                Id = entity.Entity.Id,
+                Name = entity.Entity.Name
+            };
+
+            return teamDto;
         }
     }
 }

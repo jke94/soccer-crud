@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SoccerCrud.WebApi.Dto;
-using SoccerCrud.WebApi.Services;
-
-namespace SoccerCrud.WebApi.Controllers
+﻿namespace SoccerCrud.WebApi.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using SoccerCrud.WebApi.Dto;
+    using SoccerCrud.WebApi.Services;
+
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class TeamController : Controller
     {
         private ITeamService _teamService;
@@ -13,6 +13,19 @@ namespace SoccerCrud.WebApi.Controllers
         public TeamController(ITeamService teamService)
         {
             _teamService = teamService;
+        }
+
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAll()
+        {
+            var taskResult = await _teamService.GetAllAsync();
+
+            if (taskResult == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(taskResult);
         }
 
         [HttpGet("{id:guid}")]
@@ -39,6 +52,32 @@ namespace SoccerCrud.WebApi.Controllers
             }
 
             return Ok(createdTeamDto);
+        }
+
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateTeamDto updateTeamDto)
+        {
+            var teamDto = await _teamService.UpdateAsync(id, updateTeamDto);
+
+            if (teamDto == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(teamDto);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var taskResult = await _teamService.DeleteAsync(id);
+
+            if (!taskResult)
+            {
+                return BadRequest();
+            }
+
+            return Ok(taskResult);
         }
     }
 }
