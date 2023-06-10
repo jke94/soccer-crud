@@ -1,6 +1,7 @@
 ﻿namespace SoccerCrud.WebApi.Repositories
 {
     using Microsoft.EntityFrameworkCore;
+    using SoccerCrud.WebApi.Database;
     using SoccerCrud.WebApi.Dto;
     using SoccerCrud.WebApi.Entities;
 

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using SoccerCrud.WebApi;
+using SoccerCrud.WebApi.Database;
 using SoccerCrud.WebApi.Repositories;
 using SoccerCrud.WebApi.Services;
 using System.Text.Json.Serialization;
@@ -48,3 +48,5 @@ app.MapControllers();
 app.UseHttpsRedirection();
 
 app.Run();
+
+// https://dev.to/renukapatil/supercharging-aspnet-60-with-odata-crud-batching-pagination-12np
