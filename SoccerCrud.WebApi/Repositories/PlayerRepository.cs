@@ -41,9 +41,30 @@
             return createdPlayerDto;
         }
 
-        public Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var taskResult = await _soccerCrudDataContext.Players.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (taskResult == null)
+            {
+                return false;
+            }
+
+            var entity = _soccerCrudDataContext.Remove(taskResult);
+
+            if (taskResult == null)
+            {
+                return false;
+            }
+
+            var result = await _soccerCrudDataContext.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public async Task<IList<PlayerDto>?> GetAllAsync()
@@ -69,14 +90,51 @@
             return teams;
         }
 
-        public Task<PlayerDto?> GetAsyncById(Guid id)
+        public async Task<PlayerDto?> GetAsyncById(Guid id)
         {
-            throw new NotImplementedException();
+            var taskResult = await _soccerCrudDataContext.Players.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (taskResult == null)
+            {
+                return null;
+            }
+
+            var playerDto = new PlayerDto()
+            {
+                Id = taskResult.Id,
+                Name = taskResult.Name
+            };
+
+            return playerDto;
         }
 
-        public Task<PlayerDto?> UpdateAsync(Guid id, UpdatePlayerDto updatePlayerDto)
+        public async Task<PlayerDto?> UpdateAsync(Guid id, UpdatePlayerDto updatePlayerDto)
         {
-            throw new NotImplementedException();
+            var player = await _soccerCrudDataContext.Players.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (player == null)
+            {
+                return null;
+            }
+
+            player.Name = updatePlayerDto.Name;
+
+            var entity = _soccerCrudDataContext.Update(player);
+
+            if (entity == null)
+            {
+                return null;
+            }
+
+            await _soccerCrudDataContext.SaveChangesAsync();
+
+            var playerDto = new PlayerDto()
+            {
+                Id = entity.Entity.Id,
+                Name = entity.Entity.Name
+            };
+
+            return playerDto;
         }
     }
 }
