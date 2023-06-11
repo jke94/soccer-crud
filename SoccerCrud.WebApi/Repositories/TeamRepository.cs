@@ -43,7 +43,7 @@
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            var taskResult = await _soccerCrudDataContext.Team.FirstOrDefaultAsync(x => x.Id == id);
+            var taskResult = await _soccerCrudDataContext.Teams.FirstOrDefaultAsync(x => x.Id == id);
 
             if (taskResult == null)
             {
@@ -69,7 +69,7 @@
 
         public async Task<IList<TeamDto>?> GetAllAsync()
         {
-            var taskResult = await _soccerCrudDataContext.Team.ToListAsync();
+            var taskResult = await _soccerCrudDataContext.Teams.ToListAsync();
 
             if (taskResult == null)
             {
@@ -92,7 +92,7 @@
 
         public async Task<TeamDto?> GetAsyncById(Guid id)
         {
-            var taskResult = await _soccerCrudDataContext.Team.FirstOrDefaultAsync(x => x.Id == id);
+            var taskResult = await _soccerCrudDataContext.Teams.FirstOrDefaultAsync(x => x.Id == id);
 
             if(taskResult == null)
             {
@@ -110,7 +110,7 @@
 
         public async Task<TeamDto?> UpdateAsync(Guid id, UpdateTeamDto updateTeamDto)
         {
-            var team = await _soccerCrudDataContext.Team.FirstOrDefaultAsync(x => x.Id == id);
+            var team = await _soccerCrudDataContext.Teams.FirstOrDefaultAsync(x => x.Id == id);
 
             if(team == null)
             {

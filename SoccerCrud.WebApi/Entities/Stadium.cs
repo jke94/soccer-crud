@@ -1,6 +1,6 @@
 ﻿namespace SoccerCrud.WebApi.Entities
 {
-    public class Player
+    public class Stadium
     {
         public Guid Id { get; init; } = Guid.NewGuid();
 
@@ -8,6 +8,6 @@
 
         public Guid TeamId { get; set; }
 
-        public ICollection<Goal> Goals { get; set; }
+        public ICollection<Match> Matchs { get; set; }
     }
 }

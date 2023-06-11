@@ -9,7 +9,7 @@
     {
         public async Task SeedData(SoccerCrudDataContext soccerCrudDataContext)
         {
-            soccerCrudDataContext.Team.AddRange(TeamDataSeed.GetTeams());
+            soccerCrudDataContext.Teams.AddRange(TeamDataSeed.GetTeams());
             soccerCrudDataContext.Players.AddRange(PlayerDataSeed.GetPlayers());
 
             await soccerCrudDataContext.SaveChangesAsync();
