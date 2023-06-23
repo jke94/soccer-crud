@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoccerCrud.WebApi", "SoccerCrud.WebApi\SoccerCrud.WebApi.csproj", "{F2D4DD54-10E8-4BED-8B74-BD7456BC1A01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoccerCrud.WebApi", "SoccerCrud.WebApi\SoccerCrud.WebApi.csproj", "{F2D4DD54-10E8-4BED-8B74-BD7456BC1A01}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A0650118-B095-4CB1-8688-807F98F5A066}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F2D4DD54-10E8-4BED-8B74-BD7456BC1A01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2D4DD54-10E8-4BED-8B74-BD7456BC1A01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2D4DD54-10E8-4BED-8B74-BD7456BC1A01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0650118-B095-4CB1-8688-807F98F5A066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0650118-B095-4CB1-8688-807F98F5A066}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0650118-B095-4CB1-8688-807F98F5A066}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0650118-B095-4CB1-8688-807F98F5A066}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

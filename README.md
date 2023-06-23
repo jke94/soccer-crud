@@ -19,3 +19,17 @@ Current state of development:
 Legend (status implementation):
 - ✅ Implemented
 - ❔ Pending
+
+
+## Docker-compose: Start SoccerCrud.WebApi.
+
+- Windows:
+
+```
+docker-compose.exe -f ./docker-compose.yml -p soccer-crud up --build
+```
+
+- Linux
+```
+sudo docker compose -f ./docker-compose.yml -p soccer-crud up --build
+```

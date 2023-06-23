@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  soccercrud.webapi:
+    image: ${DOCKER_REGISTRY-}soccercrudwebapi
+    build:
+      context: .
+      dockerfile: SoccerCrud.WebApi/Dockerfile
