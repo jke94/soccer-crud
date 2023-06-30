@@ -51,11 +51,16 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseHttpsRedirection();
+}
+
+if (app.Environment.IsStaging())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.MapControllers();
-
-app.UseHttpsRedirection();
 
 app.Run();
 

@@ -33,3 +33,7 @@ docker-compose.exe -f ./docker-compose.yml -p soccer-crud up --build
 ```
 sudo docker compose -f ./docker-compose.yml -p soccer-crud up --build
 ```
+
+After running the last command open the URL:
+
+- http://localhost:5112/swagger/index.html

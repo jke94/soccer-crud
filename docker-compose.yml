@@ -6,3 +6,7 @@ services:
     build:
       context: .
       dockerfile: SoccerCrud.WebApi/Dockerfile
+    ports:
+      - "5112:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Staging
