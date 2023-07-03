@@ -20,4 +20,4 @@ jobs:
     - name: Build
       run: dotnet build .\soccer-crud.sln --configuration Release
     - name: Test
-      run:dotnet test .\soccer-crud.sln --configuration Release --no-build --verbosity normal
+      run: dotnet test .\soccer-crud.sln --configuration Release --no-build --verbosity normal
