@@ -41,3 +41,4 @@ After running the last command open the URL:
 ## C. Useful information.
 
 - [Supercharging ASP.NET 6.0 with ODATA | CRUD | Batching | Pagination](https://dev.to/renukapatil/supercharging-aspnet-60-with-odata-crud-batching-pagination-12np)
+- [How to Compose an ASP.NET Core Web API (.NET 6) with an MS SQL Server 2022 on Linux in Docker](https://blog.christian-schou.dk/dockerize-net-core-web-api-with-ms-sql-server/)
