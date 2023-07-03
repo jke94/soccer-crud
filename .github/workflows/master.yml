@@ -16,6 +16,6 @@ jobs:
       with:
         dotnet-version: 7.x.x
     - name: Build
-      run: dotnet build .\soccer-crud.sln --configuration Release
+      run: dotnet build soccer-crud.sln --configuration Release
     - name: Test
-      run: dotnet test .\soccer-crud.sln --configuration Release --no-build --verbosity normal
+      run: dotnet test soccer-crud.sln --configuration Release --no-build --verbosity normal
