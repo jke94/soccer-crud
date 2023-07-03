@@ -21,7 +21,6 @@ Current state of development:
 |7| ❔ | FastEndpoints (pending) |
 |8| ❔ | Integration tests |
 
-
 ## B. Start SoccerCrud.WebApi (docker-compose)
 
 - Windows:
@@ -38,3 +37,7 @@ sudo docker compose -f ./docker-compose.yml -p soccer-crud up --build
 After running the last command open the URL:
 
 - http://localhost:5112/swagger/index.html
+
+## C. Useful information.
+
+- [Supercharging ASP.NET 6.0 with ODATA | CRUD | Batching | Pagination](https://dev.to/renukapatil/supercharging-aspnet-60-with-odata-crud-batching-pagination-12np)
