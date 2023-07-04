@@ -13,7 +13,7 @@ Current state of development:
 || Status | Description | 
 | :---: | :---: |     :---    |
 |1| ✅ | Database persistence (using EF Core as ORM). |
-|2| ❔ | Docker-compose to create differnt containers for database and webapi |
+|2| ✅ | Docker-compose to create differnt containers for database and webapi |
 |3| ❔ | Web Api Authentication |
 |4| ❔ | Web Api Authorization |
 |5| ❔ | Web Api Health checks |
