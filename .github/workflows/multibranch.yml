@@ -1,4 +1,4 @@
-name: soccer-crud.sln
+name: Multibranch
 
 on:
   push:
