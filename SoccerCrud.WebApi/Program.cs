@@ -39,28 +39,25 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<SoccerCrudDataContext>();
     var dataSeed = scope.ServiceProvider.GetRequiredService<IDataSeed>();
 
-    context.Database.EnsureDeletedAsync().Wait();
-    context.Database.Migrate();
-    
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseHttpsRedirection();
+
+        context.Database.EnsureDeletedAsync().Wait();
+        context.Database.Migrate();
+    }
+
+    if (app.Environment.IsStaging())
+    {
+        await context.Database.EnsureCreatedAsync();
+    }
+
     await dataSeed.SeedData(context);
 }
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    app.UseHttpsRedirection();
-}
 
-if (app.Environment.IsStaging())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app.MapControllers();
 
 app.Run();
-
-// 
