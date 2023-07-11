@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SoccerCrud.WebApi;
 using SoccerCrud.WebApi.Database;
 using SoccerCrud.WebApi.Database.Seeds;
+using SoccerCrud.WebApi.Health;
 using SoccerCrud.WebApi.Repositories;
 using SoccerCrud.WebApi.Services;
 using System.Text.Json.Serialization;
@@ -17,6 +18,9 @@ builder.Services.AddDatabaseServices();
 
 // Database: Seed data.
 builder.Services.AddScoped<IDataSeed, DataSeed>();
+
+builder.Services.AddHealthChecks()
+    .AddCheck<DatabaseHealthCheck>("Database");
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -55,6 +59,7 @@ using (var scope = app.Services.CreateScope())
     await dataSeed.SeedData(context);
 }
 
+app.MapHealthChecks("/_health");
 
 app.UseSwagger();
 app.UseSwaggerUI();
