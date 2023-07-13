@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SoccerCrud.WebApi;
@@ -38,10 +39,18 @@ builder.Services.AddSwaggerGen(c =>
         { securitySchema, new[] { "Bearer" } }
     });
 });
+
 builder.Services.AddMvc();
 
 // Dabatase: Add services.
 builder.Services.AddDatabaseServices();
+
+// Database: Idenity.
+builder.Services.AddDbContext<AppIdentityDbContext>(
+        options => options.UseInMemoryDatabase("TestDatabase"))
+    .AddIdentityCore<ApplicationUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppIdentityDbContext>();
 
 // Database: Seed data.
 builder.Services.AddScoped<IDataSeed, DataSeed>();
@@ -71,6 +80,8 @@ builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
+
+await AppIdentityDbContextSeed.SeedAsync(app);
 
 using (var scope = app.Services.CreateScope())
 {

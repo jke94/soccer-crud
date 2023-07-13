@@ -1,36 +1,41 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using SoccerCrud.WebApi.Services.Auth;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-
-namespace SoccerCrud.WebApi.Controllers
+﻿namespace SoccerCrud.WebApi.Controllers
 {
+    #region using
+
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using SoccerCrud.WebApi.Auth;
+    using SoccerCrud.WebApi.Services.Auth;
+    using System.Security.Claims;
+
+    #endregion
+
     public class AuthController : ControllerBase
     {
         private readonly ITokenClaimsService _tokenClaimsService;
-        private readonly IDummyUserManager _dummyUserManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+
 
         public AuthController(
             ITokenClaimsService tokenClaimsService,
-            IDummyUserManager dummyUserManager
-            )
+            UserManager<ApplicationUser> userManager)
         {
             _tokenClaimsService = tokenClaimsService;
-            _dummyUserManager = dummyUserManager;
+            _userManager = userManager;
         }
 
-        //[HttpGet("currentUser")]
-        //[Authorize]
-        //public async Task<IActionResult> GetCurrentUser() =>
-        //    Ok(User.Identity.IsAuthenticated ?
-        //        await UserInfo.CreateUserInfo(User, 
-        //            await _tokenClaimsService.GetTokenAsync(User.Identity.Name))
-        //        : UserInfo.Anonymous);
+        [HttpGet("currentUser")]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            var nameIdentifier = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userName = User.FindFirstValue(ClaimTypes.Name);
+            var role = User.FindFirstValue(ClaimTypes.Role);
+            var firstName = User.FindFirstValue("firstname");
+            var lastName = User.FindFirstValue("lastname");
+
+            return Ok(new { nameIdentifier, userName, role, firstName, lastName });
+        }
 
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate(
@@ -43,9 +48,9 @@ namespace SoccerCrud.WebApi.Controllers
                 return BadRequest("User or password it´s empty.");
             }
 
-            var succeeded = await _dummyUserManager.CheckPasswordAsync(
-                request.UserName, 
-                request.Password);
+            var user = await _userManager.FindByNameAsync(request.UserName);
+
+            var succeeded = await _userManager.CheckPasswordAsync(user, request.Password);
 
             if (succeeded)
             {
