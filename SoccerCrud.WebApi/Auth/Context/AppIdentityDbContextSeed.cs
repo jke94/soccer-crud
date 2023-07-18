@@ -1,8 +1,9 @@
-﻿namespace SoccerCrud.WebApi.Auth
+﻿namespace SoccerCrud.WebApi.Auth.Context
 {
     #region using
 
     using Microsoft.AspNetCore.Identity;
+    using SoccerCrud.WebApi.Auth.Model;
 
     #endregion
 
@@ -22,8 +23,8 @@
 
                 // Create basic users
 
-                var userA = new ApplicationUser 
-                { 
+                var userA = new ApplicationUser
+                {
                     UserName = "javi.karra",
                     Email = "javi.karra@mycompany.com",
                 };
@@ -52,14 +53,15 @@
 
                 string adminUserName = "admin";
 
-                var adminUser = new ApplicationUser { 
-                    UserName = adminUserName, 
+                var adminUser = new ApplicationUser
+                {
+                    UserName = adminUserName,
                     Email = "admin@test.com",
                 };
 
-               var taskResultAdmin = await userManager.CreateAsync(adminUser, "adminpwd");
+                var taskResultAdmin = await userManager.CreateAsync(adminUser, "adminpwd");
 
-                if(!taskResultAdmin.Succeeded)
+                if (!taskResultAdmin.Succeeded)
                 {
                     throw new Exception($"User {adminUser.UserName} not created.");
                 }

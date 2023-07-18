@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using SoccerCrud.WebApi.Auth;
+    using SoccerCrud.WebApi.Auth.Model;
     using SoccerCrud.WebApi.Services.Auth;
     using System.Security.Claims;
 

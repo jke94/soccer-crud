@@ -1,4 +1,4 @@
-﻿namespace SoccerCrud.WebApi.Auth
+﻿namespace SoccerCrud.WebApi.Auth.Model
 {
     using Microsoft.AspNetCore.Identity;
 

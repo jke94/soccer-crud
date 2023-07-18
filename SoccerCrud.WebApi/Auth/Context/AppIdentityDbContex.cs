@@ -1,9 +1,10 @@
-﻿namespace SoccerCrud.WebApi.Auth
+﻿namespace SoccerCrud.WebApi.Auth.Context
 {
     #region using
 
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using SoccerCrud.WebApi.Auth.Model;
 
     #endregion
 

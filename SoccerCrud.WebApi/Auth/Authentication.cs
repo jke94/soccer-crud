@@ -1,8 +1,8 @@
 ﻿namespace SoccerCrud.WebApi.Auth
 {
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
     #region using
 
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.IdentityModel.Tokens;
     using System.Text;
 

@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SoccerCrud.WebApi;
 using SoccerCrud.WebApi.Auth;
+using SoccerCrud.WebApi.Auth.Context;
+using SoccerCrud.WebApi.Auth.Model;
 using SoccerCrud.WebApi.Database;
 using SoccerCrud.WebApi.Database.Seeds;
 using SoccerCrud.WebApi.Health;

@@ -4,7 +4,7 @@
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.IdentityModel.Tokens;
-    using SoccerCrud.WebApi.Auth;
+    using SoccerCrud.WebApi.Auth.Model;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
     using System.Text;
