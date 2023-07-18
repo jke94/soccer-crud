@@ -2,7 +2,6 @@
 {
     #region using
 
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using SoccerCrud.WebApi.Auth;
@@ -13,9 +12,14 @@
 
     public class AuthController : ControllerBase
     {
+        #region Fields
+
         private readonly ITokenClaimsService _tokenClaimsService;
         private readonly UserManager<ApplicationUser> _userManager;
 
+        #endregion
+
+        #region Constructor
 
         public AuthController(
             ITokenClaimsService tokenClaimsService,
@@ -24,6 +28,10 @@
             _tokenClaimsService = tokenClaimsService;
             _userManager = userManager;
         }
+
+        #endregion
+
+        #region HTTP GET Methods
 
         [HttpGet("currentUser")]
         public async Task<IActionResult> GetCurrentUser()
@@ -36,6 +44,10 @@
 
             return Ok(new { nameIdentifier, userName, role, firstName, lastName });
         }
+
+        #endregion
+
+        #region HTTP POST Methods
 
         [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate(
@@ -50,6 +62,11 @@
 
             var user = await _userManager.FindByNameAsync(request.UserName);
 
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
             var succeeded = await _userManager.CheckPasswordAsync(user, request.Password);
 
             if (succeeded)
@@ -62,6 +79,8 @@
 
             return Unauthorized(response);
         }
+
+        #endregion
     }
 
     public class AuthenticateRequest

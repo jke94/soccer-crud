@@ -47,10 +47,16 @@ builder.Services.AddDatabaseServices();
 
 // Database: Idenity.
 builder.Services.AddDbContext<AppIdentityDbContext>(
-        options => options.UseInMemoryDatabase("TestDatabase"))
-    .AddIdentityCore<ApplicationUser>()
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<AppIdentityDbContext>();
+    options => options.UseInMemoryDatabase("TestDatabase"))
+.AddIdentityCore<ApplicationUser>( options =>
+{
+    options.Password.RequiredLength = 7;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequireUppercase = false;
+})
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<AppIdentityDbContext>();
 
 // Database: Seed data.
 builder.Services.AddScoped<IDataSeed, DataSeed>();
@@ -68,7 +74,6 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddAuthenticationLayer();
 builder.Services.AddAuthorizationLayer();
 builder.Services.AddScoped<ITokenClaimsService, TokenClaimsService>();
-builder.Services.AddSingleton<IDummyUserManager, DummyUserManager>();
 
 // Custom Services.
 builder.Services.AddScoped<ITeamService, TeamService>();

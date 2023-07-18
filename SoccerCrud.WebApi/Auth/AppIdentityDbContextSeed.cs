@@ -1,13 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace SoccerCrud.WebApi.Auth
+﻿namespace SoccerCrud.WebApi.Auth
 {
+    #region using
+
+    using Microsoft.AspNetCore.Identity;
+
+    #endregion
+
     public static class AppIdentityDbContextSeed
     {
         public static async Task SeedAsync(WebApplication app)
         {
             using var scope = app.Services.CreateScope();
             var scopedProvider = scope.ServiceProvider;
+
             try
             {
                 var userManager = scopedProvider.GetRequiredService<UserManager<ApplicationUser>>();
@@ -15,22 +20,57 @@ namespace SoccerCrud.WebApi.Auth
 
                 await roleManager.CreateAsync(new IdentityRole("Administrator"));
 
-                var defaultUser = new ApplicationUser 
-                { 
-                    UserName = "user@test.com", 
-                    Email = "user@test.com" 
-                };
-                await userManager.CreateAsync(defaultUser, "P@ss.W0rd");
+                // Create basic users
 
-                string adminUserName = "admin@test.com";
+                var userA = new ApplicationUser 
+                { 
+                    UserName = "javi.karra",
+                    Email = "javi.karra@mycompany.com",
+                };
+
+                var tasResultA = await userManager.CreateAsync(userA, "javikarrapwd");
+
+                if (!tasResultA.Succeeded)
+                {
+                    throw new Exception($"User {userA.UserName} not created.");
+                }
+
+                var userB = new ApplicationUser
+                {
+                    UserName = "lucas",
+                    Email = "lucas@mycompany.com",
+                };
+
+                var tasResultB = await userManager.CreateAsync(userB, "lucaspwd");
+
+                if (!tasResultB.Succeeded)
+                {
+                    throw new Exception($"User {userB.UserName} not created.");
+                }
+
+                // Create Admin user and assign administrator role to user.
+
+                string adminUserName = "admin";
 
                 var adminUser = new ApplicationUser { 
-                    UserName = "admin@test.com", 
-                    Email = "admin@test.com"
+                    UserName = adminUserName, 
+                    Email = "admin@test.com",
                 };
-                await userManager.CreateAsync(adminUser, "P@ss.W0rd");
+
+               var taskResultAdmin = await userManager.CreateAsync(adminUser, "adminpwd");
+
+                if(!taskResultAdmin.Succeeded)
+                {
+                    throw new Exception($"User {adminUser.UserName} not created.");
+                }
 
                 adminUser = await userManager.FindByNameAsync(adminUserName);
+
+                if (adminUser == null)
+                {
+                    throw new Exception($"User not created.");
+                }
+
                 await userManager.AddToRoleAsync(adminUser, "Administrator");
             }
             catch (Exception ex)
