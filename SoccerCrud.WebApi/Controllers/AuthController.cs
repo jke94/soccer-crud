@@ -2,6 +2,7 @@
 {
     #region using
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using SoccerCrud.WebApi.Auth;
@@ -33,8 +34,9 @@
 
         #region HTTP GET Methods
 
-        [HttpGet("currentUser")]
-        public async Task<IActionResult> GetCurrentUser()
+        [Authorize]
+        [HttpGet("LoguedUser")]
+        public IActionResult LoguedUser()
         {
             var nameIdentifier = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userName = User.FindFirstValue(ClaimTypes.Name);
