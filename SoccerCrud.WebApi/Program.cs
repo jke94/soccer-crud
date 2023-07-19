@@ -5,6 +5,7 @@ using SoccerCrud.WebApi;
 using SoccerCrud.WebApi.Auth;
 using SoccerCrud.WebApi.Auth.Context;
 using SoccerCrud.WebApi.Auth.Model;
+using SoccerCrud.WebApi.Auth.Seeds;
 using SoccerCrud.WebApi.Database;
 using SoccerCrud.WebApi.Database.Seeds;
 using SoccerCrud.WebApi.Health;
@@ -18,12 +19,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    //c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyProject", Version = "v1.0.0" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "SoccerCrud.WebApi", Version = "v1.0.0" });
 
     var securitySchema = new OpenApiSecurityScheme
     {
-        Description = "Using the Authorization header with the Bearer scheme.",
-        Name = "Authorization",
+        Description = "SoccerCrud Web Api with authentication",
+        Name = "soccer-crud",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
         Scheme = "bearer",
@@ -60,6 +61,9 @@ builder.Services.AddDbContext<AppIdentityDbContext>(
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<AppIdentityDbContext>();
 
+// Database Identity: Seed data service.
+builder.Services.AddScoped<IIdentityDataSeed, IdentityDataSeed>();
+
 // Database: Seed data.
 builder.Services.AddScoped<IDataSeed, DataSeed>();
 
@@ -88,16 +92,21 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
-await AppIdentityDbContextSeed.SeedAsync(app);
-
 using (var scope = app.Services.CreateScope())
 {
+    // Database contexts.
     var context = scope.ServiceProvider.GetRequiredService<SoccerCrudDataContext>();
+    var identityContext = scope.ServiceProvider.GetRequiredService<AppIdentityDbContext>();
+
+    // Services to seed data.
     var dataSeed = scope.ServiceProvider.GetRequiredService<IDataSeed>();
+    var dataSeedIdentity = scope.ServiceProvider.GetRequiredService<IIdentityDataSeed>();
 
     if (app.Environment.IsDevelopment())
     {
         app.UseHttpsRedirection();
+
+        await dataSeedIdentity.SeedDataIdentity(scope);
 
         context.Database.EnsureDeletedAsync().Wait();
         context.Database.Migrate();

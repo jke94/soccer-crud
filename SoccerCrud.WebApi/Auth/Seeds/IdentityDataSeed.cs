@@ -1,24 +1,29 @@
-﻿namespace SoccerCrud.WebApi.Auth.Context
+﻿namespace SoccerCrud.WebApi.Auth.Seeds
 {
-    #region using
+    #region
 
     using Microsoft.AspNetCore.Identity;
     using SoccerCrud.WebApi.Auth.Model;
 
     #endregion
 
-    public static class AppIdentityDbContextSeed
+    public interface IIdentityDataSeed
     {
-        public static async Task SeedAsync(WebApplication app)
+        public Task SeedDataIdentity(IServiceScope serviceScope);
+    }
+
+    public class IdentityDataSeed : IIdentityDataSeed
+    {
+        public async Task SeedDataIdentity(IServiceScope serviceScope)
         {
-            using var scope = app.Services.CreateScope();
-            var scopedProvider = scope.ServiceProvider;
+            var scopedProvider = serviceScope.ServiceProvider;
+
+            var logger = scopedProvider.GetRequiredService<ILogger<IdentityDataSeed>>();
+            var userManager = scopedProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var roleManager = scopedProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             try
             {
-                var userManager = scopedProvider.GetRequiredService<UserManager<ApplicationUser>>();
-                var roleManager = scopedProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
                 await roleManager.CreateAsync(new IdentityRole("Administrator"));
 
                 // Create basic users
@@ -77,9 +82,8 @@
             }
             catch (Exception ex)
             {
-                app.Logger.LogError(ex, "An error occurred seeding the DB.");
+                logger?.LogError(ex, "An error occurred seeding the DB.");
             }
         }
-
     }
 }
