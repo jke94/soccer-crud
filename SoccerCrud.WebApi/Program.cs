@@ -79,7 +79,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 // Authentication and authorization.
 builder.Services.AddAuthenticationLayer();
 builder.Services.AddAuthorizationLayer();
-builder.Services.AddScoped<ITokenClaimsService, TokenClaimsService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Custom Services.
 builder.Services.AddScoped<ITeamService, TeamService>();

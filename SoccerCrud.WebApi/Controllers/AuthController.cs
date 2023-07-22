@@ -3,9 +3,8 @@
     #region using
 
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using SoccerCrud.WebApi.Auth.Model;
+    using SoccerCrud.WebApi.Contracts;
     using SoccerCrud.WebApi.Services.Auth;
     using System.Security.Claims;
 
@@ -15,19 +14,15 @@
     {
         #region Fields
 
-        private readonly ITokenClaimsService _tokenClaimsService;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IAuthService _authService;
 
         #endregion
 
         #region Constructor
 
-        public AuthController(
-            ITokenClaimsService tokenClaimsService,
-            UserManager<ApplicationUser> userManager)
+        public AuthController(IAuthService authService)
         {
-            _tokenClaimsService = tokenClaimsService;
-            _userManager = userManager;
+            _authService = authService;
         }
 
         #endregion
@@ -38,13 +33,24 @@
         [HttpGet("LoguedUser")]
         public IActionResult LoguedUser()
         {
-            var nameIdentifier = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userName = User.FindFirstValue(ClaimTypes.Name);
+            var id = User.FindFirstValue(ClaimTypes.Sid);
+            var givenName = User.FindFirstValue(ClaimTypes.GivenName);
+            var mail = User.FindFirstValue(ClaimTypes.Email);
+            var phone = User.FindFirstValue(ClaimTypes.MobilePhone);
             var role = User.FindFirstValue(ClaimTypes.Role);
             var firstName = User.FindFirstValue("firstname");
             var lastName = User.FindFirstValue("lastname");
 
-            return Ok(new { nameIdentifier, userName, role, firstName, lastName });
+            return Ok(new
+            {
+                id,
+                givenName,
+                mail,
+                phone,
+                role,
+                firstName,
+                lastName
+            });
         }
 
         #endregion
@@ -55,45 +61,16 @@
         public async Task<IActionResult> Authenticate(
             [FromBody] AuthenticateRequest request)
         {
-            var response = new AuthenticateResponse();
+            var response = await _authService.AuthenticatenticateAsync(request);
 
-            if (string.IsNullOrEmpty(request.UserName) || string.IsNullOrEmpty(request.Password))
+            if (!response.Succeeded)
             {
-                return BadRequest("User or password it´s empty.");
+                return BadRequest(response.Message);
             }
 
-            var user = await _userManager.FindByNameAsync(request.UserName);
-
-            if (user == null)
-            {
-                return NotFound("User not found.");
-            }
-
-            var succeeded = await _userManager.CheckPasswordAsync(user, request.Password);
-
-            if (succeeded)
-            {
-                response.Succeeded = succeeded;
-                response.Token = await _tokenClaimsService.GetTokenAsync(request.UserName);
-
-                return Ok(response);
-            }
-
-            return Unauthorized(response);
+            return Ok(response);
         }
 
         #endregion
-    }
-
-    public class AuthenticateRequest
-    {
-        public string? UserName { get; set; }
-        public string? Password { get; set; }
-    }
-
-    public class AuthenticateResponse
-    {
-        public bool Succeeded { get; set; }
-        public string Token { get; set; } = string.Empty;
     }
 }
