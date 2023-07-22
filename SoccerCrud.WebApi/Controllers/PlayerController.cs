@@ -1,11 +1,13 @@
 ﻿namespace SoccerCrud.WebApi.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SoccerCrud.WebApi.Dto;
     using SoccerCrud.WebApi.Services;
 
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class PlayerController : Controller
     {
         private IPlayerService _playerService;
