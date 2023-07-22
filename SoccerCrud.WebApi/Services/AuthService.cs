@@ -1,4 +1,4 @@
-﻿namespace SoccerCrud.WebApi.Services.Auth
+﻿namespace SoccerCrud.WebApi.Services
 {
     #region using
 
@@ -8,7 +8,6 @@
     using SoccerCrud.WebApi.Contracts;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
-    using System.Security.Principal;
     using System.Text;
 
     #endregion
@@ -109,7 +108,7 @@
             var rolesAsStr = string.Join(",", roles);
 
             var claims = new List<Claim>
-            { 
+            {
                 new Claim(ClaimTypes.Sid, user.Id),
                 new Claim(ClaimTypes.Name, user.UserName ?? "NAME_NOT_FOUND"),
                 new Claim(ClaimTypes.Email, user.Email ?? "EMAIL_NOT_FOUND"),

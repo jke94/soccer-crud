@@ -11,7 +11,6 @@ using SoccerCrud.WebApi.Database.Seeds;
 using SoccerCrud.WebApi.Health;
 using SoccerCrud.WebApi.Repositories;
 using SoccerCrud.WebApi.Services;
-using SoccerCrud.WebApi.Services.Auth;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -82,6 +81,7 @@ builder.Services.AddAuthorizationLayer();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Custom Services.
+builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 

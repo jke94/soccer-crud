@@ -5,12 +5,12 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SoccerCrud.WebApi.Contracts;
-    using SoccerCrud.WebApi.Services.Auth;
+    using SoccerCrud.WebApi.Services;
     using System.Security.Claims;
 
     #endregion
 
-    public class AuthController : ControllerBase
+    public class AuthController : Controller
     {
         #region Fields
 
