@@ -19,7 +19,8 @@ Current state of development:
 |5| ✅ | Web Api Health checks |
 |6| ✅ | Solution with architecture layers (services with application logic, repository pattern, data access logic and data seeded for development environment) |
 |7| ❔ | FastEndpoints (pending) |
-|8| ❔ | Integration tests |
+|8| ✅ | Integration tests |
+|9| ❔ | Web Api response with batching and pagination |
 
 ## B. Start SoccerCrud.WebApi (docker-compose)
 
