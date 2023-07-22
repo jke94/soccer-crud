@@ -40,5 +40,13 @@ After running the last command open the URL:
 
 ## C. Useful information.
 
+### C.1. - Example: ASP.NET 6.0 Batching and pagination
+
 - [Supercharging ASP.NET 6.0 with ODATA | CRUD | Batching | Pagination](https://dev.to/renukapatil/supercharging-aspnet-60-with-odata-crud-batching-pagination-12np)
+
+### C.2.- Example: Integration testing in .NET
+
+- [Elevate Your .NET Testing Strategy #1: WebApplicationFactory](https://goatreview.com/dotnet-testing-webapplicationfactory/?utm_content=257166118&utm_medium=social&utm_source=linkedin&hss_channel=lcp-18055275)
+
+### C.3.- Example: Others
 - [How to Compose an ASP.NET Core Web API (.NET 6) with an MS SQL Server 2022 on Linux in Docker](https://blog.christian-schou.dk/dockerize-net-core-web-api-with-ms-sql-server/)
