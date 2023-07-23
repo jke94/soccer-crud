@@ -1,9 +1,13 @@
 ﻿namespace SoccerCrud.WebApi.Controllers
 {
+    #region using
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SoccerCrud.WebApi.Dto;
     using SoccerCrud.WebApi.Services;
+
+    #endregion
 
     [ApiController]
     [Route("api/[controller]")]
