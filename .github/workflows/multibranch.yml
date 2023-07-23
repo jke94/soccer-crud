@@ -2,7 +2,8 @@ name: Multibranch
 
 on:
   push:
-    branches: [ "*" ]
+    branches: 
+      - "*"
 
 jobs:
   build:

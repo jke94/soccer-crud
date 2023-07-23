@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoccerCrud.WebApi", "Soccer
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A0650118-B095-4CB1-8688-807F98F5A066}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoccerCrud.WebApi.IntegrationTests", "SoccerCrud.WebApi.IntegrationTests\SoccerCrud.WebApi.IntegrationTests.csproj", "{A526BB21-F0D2-42B6-8FF8-0620C3E7E417}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A0650118-B095-4CB1-8688-807F98F5A066}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0650118-B095-4CB1-8688-807F98F5A066}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0650118-B095-4CB1-8688-807F98F5A066}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A526BB21-F0D2-42B6-8FF8-0620C3E7E417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A526BB21-F0D2-42B6-8FF8-0620C3E7E417}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A526BB21-F0D2-42B6-8FF8-0620C3E7E417}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A526BB21-F0D2-42B6-8FF8-0620C3E7E417}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

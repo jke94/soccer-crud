@@ -10,6 +10,8 @@
 
     #endregion
 
+    [ApiController]
+    [Route("api/[controller]")]
     public class AuthController : Controller
     {
         #region Fields

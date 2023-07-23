@@ -123,6 +123,8 @@ using (var scope = app.Services.CreateScope())
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapGet("/api/SayHello", () => "Hello world!");
+
 app.MapHealthChecks("/_health");
 
 app.UseSwagger();
@@ -130,3 +132,5 @@ app.UseSwaggerUI();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
