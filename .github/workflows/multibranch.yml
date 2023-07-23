@@ -3,7 +3,7 @@ name: Multibranch
 on:
   push:
     branches: 
-      - *
+      - '*'
 
 jobs:
   build:
