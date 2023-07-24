@@ -15,12 +15,14 @@
     public interface IAuthService
     {
         public Task<AuthenticateResponse> AuthenticatenticateAsync(AuthenticateRequest request);
+        public Task<CreateUserResponse> CreateUserDto(CreateUserDto request);
     }
 
     public class AuthService : IAuthService
     {
         #region Fiedls
-
+        
+        public const string USER_ROLE = "User";
         private readonly IConfiguration _configuration;
         private readonly UserManager<ApplicationUser> _userManager;
 
@@ -75,6 +77,68 @@
             response.Succeeded = succeeded;
             response.Token = await GetTokenAsync(request.UserName);
             response.Message = "OK";
+
+            return response;
+        }
+
+        public async Task<CreateUserResponse> CreateUserDto(CreateUserDto request)
+        {
+            var response = new CreateUserResponse();
+
+            if (string.IsNullOrEmpty(request.UserName) || string.IsNullOrEmpty(request.Password))
+            {
+                response.Succeeded = false;
+                response.Message = "User or password it´s empty.";
+
+                return response;
+            }
+
+            var user = await _userManager.FindByNameAsync(request.UserName);
+
+            if (user != null)
+            {
+                response.Succeeded = false;
+                response.Message = $"User with user name '{request.UserName}' already exits. Try it again.";
+
+                return response;
+            }
+
+            user = new ApplicationUser()
+            {
+                UserName = request.UserName,
+                Email = request.Email,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                PhoneNumber = request.PhoneNumber
+            };
+
+            var createdUser = await _userManager.CreateAsync(user, request.Password);
+
+            if (!createdUser.Succeeded)
+            {
+                response.Succeeded = false;
+                response.Message = $"Something was wrong in create operation.";
+
+                return response;
+            }
+
+            var foundUser = await _userManager.FindByNameAsync(user.UserName);
+
+            if (foundUser == null)
+            {
+                throw new Exception($"User not created.");
+            }
+
+            var rolledUser = await _userManager.AddToRoleAsync(user, USER_ROLE);
+
+            if (!rolledUser.Succeeded)
+            {
+                response.Succeeded = false;
+                response.Message = $"{user.UserName} is not enrolled.";
+            }
+
+            response.Succeeded = true;
+            response.Message = $"User with user name '{user.UserName}' created successfully.";
 
             return response;
         }

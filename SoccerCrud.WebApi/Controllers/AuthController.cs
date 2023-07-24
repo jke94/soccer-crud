@@ -73,6 +73,25 @@
             return Ok(response);
         }
 
+        [HttpPost("CreateUser")]
+        public async Task<IActionResult> CreateUser(
+            [FromBody] CreateUserDto createUserDto)
+        {
+            if (createUserDto == null)
+            {
+                return BadRequest($"{nameof(createUserDto)} is null.");
+            }
+
+            var response = await _authService.CreateUserDto(createUserDto);
+
+            if (!response.Succeeded)
+            {
+                return BadRequest(response.Message);
+            }
+
+            return Ok(response);
+        }
+
         #endregion
     }
 }
